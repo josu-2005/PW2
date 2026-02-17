@@ -4,13 +4,16 @@ ACTIVIDAD DE CLASE
 ¿que es el proyecto?
 Viajes compartidos seguros es una aplicacion web para compartir viajes con la finalidad de compartir vehiculos para taryectos cotidianos entre usuarios que coinciden hacia un mismo destino.
 
-# FrontEnd
+# ¿Qué tecnologías usa el proyecto?
+FRONTEND
 La aplicación web usa React y TailWindCSS para el diseño de las ventanas.
+Si quieres iniciar el frontEnd usa el siguiente comando en la consola de comando dentro de la carpeta del proyecto:
+npm run dev
 
-# BackEnd
+BACKEND
 Se estará usando NodeJS + Express
 
-# Base de datos
+DATABASE
 Se usara MongoDB
 
 ¿como se ejecutara en un entorno local?
