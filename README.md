@@ -12,3 +12,9 @@ Se estará usando NodeJS + Express
 
 # Base de datos
 Se usara MongoDB
+
+¿como se ejecutara en un entorno local?
+se espera que la aplicacion web se use de manera swimilar a aplicaciones existentes como uber o didi con la diferencia de que nuestro proyecto no es un servicio que genera ingresos.
+su ejecucion esta planeada para ser de uso colaborativo: conductor-pasajero. 
+uso de gps para llevar un registro en caso de suceder un evento imprevisto, registro de placas del vehiculo asi como los datos de cada uno de los usuarios (INE) involucrados en los viajes.
+el proceso de viajes se llevara acabo mediante una solicitud que creara el conductor que sera visible para el o los pasajeros que coincidan con la ruta publicada.
