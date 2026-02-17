@@ -7,4 +7,8 @@ Viajes compartidos seguros es una aplicacion web para compartir viajes con la fi
 # FrontEnd
 La aplicación web usa React y TailWindCSS para el diseño de las ventanas.
 
-Para iniciar el FrontEnd se debe usar el siguiente comando: 
+# BackEnd
+Se estará usando NodeJS + Express
+
+# Base de datos
+Se usara MongoDB
