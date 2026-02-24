@@ -1,85 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>token</title>
-
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
         <style>
-            body{
-                font-family: Verdana;
-                background-color: #6fa0e9;
-                text-align: center;
-                }
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+            }
 
-            form{
-                background: white;
+            .login-container {
                 width: 300px;
                 margin: 100px auto;
                 padding: 20px;
-                border-radius: 10px;
-                }
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
 
-            input{
-                width: 90%;
+            input {
+                width: 100%;
                 padding: 8px;
                 margin: 8px 0;
-                }
+            }
+
+            button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007BFF;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+            .error {
+                color: red;
+                font-size: 0.9em;
+            }
+
+            #login-message {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 1.2em;
+                width: 50vw;
+                word-wrap: break-word;
+
+            }
         </style>
-
-    <script>
-        function validarFormulario(e){
-            e.preventDefault();
-
-            let email = document.getElementById("email").value.trim();
-            let password = document.getElementById("password").value.trim();
-
-    // Validación de email //
-            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                 if(!emailRegex.test(email)){
-                alert("El usuario debe ser un correo válido");
-                return;
-                }
-
-    // Validación de contraseña //
-            let passRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/;
-
-                if(!passRegex.test(password)){
-                 alert("La contraseña debe tener una mayúscula, un número y un carácter especial");
-                return;
-                }
-
-    // Enviar datos al backend //
-            fetch("http://localhost:3000/login", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, password })
-                })
-                .then(res => res.json())
-                .then(data => {
-                alert("Token recibido:");
-                console.log(data.token);
-                })
-                .catch(err => {
-                alert("Error al conectar con el servidor");
-                console.error(err);
-                });
-}
-</script>
-
-</head>
+    </head>
     <body>
 
-        <h2>Login</h2>
+        <div class="login-container">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
 
-            <form onsubmit="validarFormulario(event)">
-                <input type="email" id="email" placeholder="Correo electrónico" required>
-                <input type="password" id="password" placeholder="Contraseña" required>
-                <button type="submit">Iniciar sesión</button>
+                <label for="email">Usuario (Correo electrónico)</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Contraseña</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required
+                    title="Debe contener al menos una mayúscula, un número y un carácter especial."
+                >
+
+                <div id="errorMsg" class="error"></div>
+
+                <button type="submit">Ingresar</button>
+
             </form>
-    
+        </div>
+
+        <span id="login-message"></span>
+
+        <script>
+
+            document.getElementById("loginForm").addEventListener("submit", async function(event) {
+                event.preventDefault();
+
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const errorMsg = document.getElementById("errorMsg");
+
+                const response = await fetch("http://localhost:3000/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    errorMsg.textContent = "";
+                    localStorage.setItem("token", data.token);
+                    document.getElementById("login-message").textContent = "Login exitoso con token: " + data.token;
+                    console.log("Token:", data.token);
+                } else {
+                    errorMsg.textContent = data.message ? data.message : "Error en el login";
+                }
+            });
+
+        </script>
+
     </body>
 </html>
