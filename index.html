@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>token</title>
+
+        <style>
+            body{
+                font-family: Verdana;
+                background-color: #6fa0e9;
+                text-align: center;
+                }
+
+            form{
+                background: white;
+                width: 300px;
+                margin: 100px auto;
+                padding: 20px;
+                border-radius: 10px;
+                }
+
+            input{
+                width: 90%;
+                padding: 8px;
+                margin: 8px 0;
+                }
+        </style>
+
+    <script>
+        function validarFormulario(e){
+            e.preventDefault();
+
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+    // Validación de email //
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                 if(!emailRegex.test(email)){
+                alert("El usuario debe ser un correo válido");
+                return;
+                }
+
+    // Validación de contraseña //
+            let passRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/;
+
+                if(!passRegex.test(password)){
+                 alert("La contraseña debe tener una mayúscula, un número y un carácter especial");
+                return;
+                }
+
+    // Enviar datos al backend //
+            fetch("http://localhost:3000/login", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+                })
+                .then(res => res.json())
+                .then(data => {
+                alert("Token recibido:");
+                console.log(data.token);
+                })
+                .catch(err => {
+                alert("Error al conectar con el servidor");
+                console.error(err);
+                });
+}
+</script>
+
+</head>
+    <body>
+
+        <h2>Login</h2>
+
+            <form onsubmit="validarFormulario(event)">
+                <input type="email" id="email" placeholder="Correo electrónico" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Iniciar sesión</button>
+            </form>
+    
+    </body>
+</html>
